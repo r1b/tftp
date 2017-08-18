@@ -1,29 +1,46 @@
 // https://tools.ietf.org/html/rfc1350
 
-const BLOCK_LENGTH      : u16   = 512;
-const REQUESTING_TID    : u8    = 69;
+pub const BLOCK_LENGTH: u16 = 512;
+pub const REQUESTING_TID: u16 = 69;
 
-enum TransferMode {
-    NetAscii    = "netascii"    : &str,
-    Octet       = "octet"       : &str,
-    Mail        = "mail"        : &str
+pub enum TransferMode {
+    NetAscii,
+    Octet,
 }
 
-enum Opcode {
-    Rrq     = 1 : u16,
-    Wrq     = 2 : u16,
-    Data    = 3 : u16,
-    Ack     = 4 : u16,
-    Error   = 5 : u16
+impl TransferMode {
+    pub fn from_string(s: String) -> Option<TransferMode> {
+        match s.as_ref() {
+            "netascii" => Some(TransferMode::NetAscii),
+            "octet" => Some(TransferMode::Octet),
+            _ => None
+        }
+    }
+
+    pub fn as_string(&self) -> String {
+        match &self {
+            NetAscii => String::from("netascii"),
+            Octet => String::from("octet")
+        }
+    }
+
 }
 
-enum ErrorCode {
-    Undefined           = 0 : u16,
-    FileNotFound        = 1 : u16,
-    AccessViolation     = 2 : u16,
-    DiskFull            = 3 : u16,
-    IllegalOperation    = 4 : u16,
-    UnknownTransferId   = 5 : u16,
-    FileExists          = 6 : u16,
-    NoSuchUser          = 7 : u16
+pub enum Opcode {
+    Rrq = 0x01,
+    Wrq = 0x02,
+    Data = 0x03,
+    Ack = 0x04,
+    Error = 0x05
+}
+
+pub enum ErrorCode {
+    Undefined = 0x00,
+    FileNotFound = 0x01,
+    AccessViolation = 0x02,
+    DiskFull = 0x03,
+    IllegalOperation = 0x04,
+    UnknownTransferId = 0x05,
+    FileExists = 0x06,
+    NoSuchUser = 0x07
 }

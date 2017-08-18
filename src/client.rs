@@ -1,27 +1,20 @@
+use std::fs::File;
 use std::net::UdpSocket;
-
-mod client {
-    pub fn read(host: &str, filename: &str) -> Result<File> {}
-    pub fn write(host: &str, filename: &str) -> Result<()> {}
-}
+use std::io::Result;
+use rfc1350::REQUESTING_TID;
+/*
+pub fn read(host: &str, filename: &str) -> Result<File> {}
+pub fn write(host: &str, filename: &str) -> Result<()> {}
 
 struct Client {
     socket: UdpSocket,
-    filename: &str
+    filename: &'static str
 }
 
 impl Client {
-    fn new(host: &str, filename: &str) -> Client {
-        let mut socket;
-
-        match UdpSocket::bind((host, REQUESTING_TID)) {
-            Ok(s) => socket = s,
-            e @ Error => e
-        };
-
-        Client {
-            socket,
-            filename
-        }
+    fn new(host: &str, filename: &str) -> Result<Client> {
+        let mut socket = UdpSocket::bind((host, REQUESTING_TID))?;
+        Client { socket, filename }
     }
 }
+*/
